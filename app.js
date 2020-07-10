@@ -11,7 +11,8 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 const render = require("./lib/htmlRenderer");
 const { join } = require("path");
 
-return inquirer
+// const questions = () => {
+    return inquirer
     .prompt([
         {
             type:"input",
@@ -55,11 +56,27 @@ return inquirer
             name: "school",
             when: function(answers) {
                 return answers.role === "Intern"
-        }}
-    ]);
-var roles = [Manager, Intern, Engineer]
+        }},
+        {
+            type: "confirm",
+            message: "Add another Employee?",
+            name: "continue",
+            when: function(answers) {
+                if (answers.confirm === true)
+                    prompt()
+            }
+        }
+    ]).then(answers => {
+        if(answers.confirm ===true) {
+            questions()
+        }
+    })
+ 
 
-render(roles)
+// questions()
+// var roles = [Manager, Intern, Engineer]
+
+// render(roles)
 
 
 
